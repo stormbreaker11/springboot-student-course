@@ -12,16 +12,9 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 
 @SpringBootApplication
-/*
- * @SecurityScheme(name = "course", scheme = "basic", type =
- * SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
- * 
- * @OpenAPIDefinition(info = @Info(title = "Student Courses", version = "2.0",
- * description = "Courses Information"))
- * 
- * 
- */
-@EnableWebMvc
+
+@SecurityScheme(name = "course", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
+@OpenAPIDefinition(info = @Info(title = "Student Courses", version = "2.0", description = "Courses Information"))
 public class CoursesApplication {
 
 	public static void main(String[] args) {

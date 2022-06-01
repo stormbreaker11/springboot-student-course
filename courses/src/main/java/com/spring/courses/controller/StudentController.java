@@ -1,8 +1,11 @@
 package com.spring.courses.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +22,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("student")
-/* @SecurityRequirement(name="course") */
+@SecurityRequirement(name="course")
 public class StudentController {
 	
 	@Autowired
@@ -42,6 +45,13 @@ public class StudentController {
 	public ResponseEntity<?> addStudent(@RequestBody Student student){
 		Student addStudent = service.addStudent(student);
 		return new ResponseEntity<String>("Student Added Successfully "+ addStudent.getStudentName(), HttpStatus.CREATED);
+	}
+    
+    @GetMapping("/allstudents")
+	public ResponseEntity<?> findAllStudent(){
+    		return new ResponseEntity<List<Student>>(service.allStudents(), HttpStatus.OK);
+		
+		//return new ResponseEntity<String>("Student Added Successfully "+ addStudent.getStudentName(), HttpStatus.CREATED);
 	}
 	
 }

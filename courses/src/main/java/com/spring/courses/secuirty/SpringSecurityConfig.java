@@ -1,31 +1,46 @@
-/*
- * package com.spring.courses.secuirty;
- * 
- * import org.springframework.context.annotation.Bean; import
- * org.springframework.context.annotation.Configuration; import
- * org.springframework.security.config.annotation.authentication.builders.
- * AuthenticationManagerBuilder; import
- * org.springframework.security.config.annotation.web.builders.HttpSecurity;
- * import org.springframework.security.config.annotation.web.configuration.
- * EnableWebSecurity; import
- * org.springframework.security.config.annotation.web.configuration.
- * WebSecurityConfigurerAdapter; import
- * org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; import
- * org.springframework.security.crypto.password.PasswordEncoder;
- * 
- * @EnableWebSecurity public class SpringSecurityConfig extends
- * WebSecurityConfigurerAdapter {
- * 
- * 
- * @Override protected void configure(HttpSecurity http) throws Exception {
- * http.authorizeRequests() .antMatchers("/swagger-ui/**",
- * "/student/**").permitAll() .anyRequest().authenticated() .and() .httpBasic();
- * }
- * 
- * @Override protected void configure(AuthenticationManagerBuilder auth) throws
- * Exception { auth.inMemoryAuthentication() .withUser("javainuse")
- * .password(passwordEncoder().encode("javainuse")) .authorities("ADMIN"); }
- * 
- * @Bean public PasswordEncoder passwordEncoder() { return new
- * BCryptPasswordEncoder(); } }
- */
+
+package com.spring.courses.secuirty;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+@SuppressWarnings("deprecation")
+@EnableWebSecurity
+@EnableWebMvc
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		
+
+		http.authorizeRequests().antMatchers("/swagger-ui/**", "/student/**").permitAll().anyRequest().authenticated()
+		.and().httpBasic()
+				// HTTP Basic authentication
+				.and().authorizeRequests().antMatchers(HttpMethod.GET, "/student/**").hasRole("USER")
+				.antMatchers(HttpMethod.POST, "/student").hasRole("ADMIN").and().csrf().disable().formLogin().disable();
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		
+		
+		  auth.inMemoryAuthentication()
+          .withUser("user").password(passwordEncoder().encode("12345")).roles("USER")
+          .and()
+          .withUser("admin").password(passwordEncoder().encode("12345")).roles("USER", "ADMIN");
+		
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+}

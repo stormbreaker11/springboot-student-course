@@ -15,4 +15,6 @@ public interface StudentService {
 	public Student byStudnetId(long id);
 
 	public void deleteStudent(long id);
+
+	//ublic List<Student> findAllStudents();
 }
