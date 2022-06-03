@@ -1,6 +1,7 @@
 package com.spring.courses.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.courses.model.Book;
 import com.spring.courses.model.Courses;
 import com.spring.courses.service.CourseService;
+import com.spring.courses.util.FindAllBooksByCourse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -45,6 +48,21 @@ public class CourseController {
 			return new ResponseEntity<String>("No Course Found With Id " + courseId, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Courses>(findCourseById, HttpStatus.OK);
+	}
+
+	
+	@GetMapping("/findBookByCourse/{id}")
+	public ResponseEntity<?> findAllStudent(@PathVariable long id) {
+		
+		
+		//return new ResponseEntity<List<Courses>>(service.), HttpStatus.OK);
+		List<Courses> findBooksByCourse = service.getAllCourses();
+	Set<Set<Book>> findBooks = FindAllBooksByCourse.findBooks(id , findBooksByCourse);
+		if(findBooks.size()>0) {
+			return new ResponseEntity<Set<Set<Book>>>(findBooks, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("No Books Found For Course "+id, HttpStatus.NOT_FOUND);
+		
 	}
 
 }

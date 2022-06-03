@@ -40,15 +40,18 @@ public class BookController {
 	public ResponseEntity<?> findAllStudent(@PathVariable long id) {
 		
 		
-		//return new ResponseEntity<List<Courses>>(service.), HttpStatus.OK);
-		List<Book> findBooksByCourse = service.findBooksByCourse();
+		return null;
 		
-		List<Book> findBooks = FindAllBooksByCourse.findBooks(id , findBooksByCourse);
-		if(findBooks.size()>0) {
-			return new ResponseEntity<List<Book>>(findBooksByCourse, HttpStatus.OK);
-		}
-		return new ResponseEntity<String>("No Books Found For Course", HttpStatus.NOT_FOUND);
 		
+		/*
+		 * //return new ResponseEntity<List<Courses>>(service.), HttpStatus.OK);
+		 * List<Book> findBooksByCourse = service.findBooksByCourse();
+		 * 
+		 * List<Book> findBooks = FindAllBooksByCourse.findBooks(id ,
+		 * findBooksByCourse); if(findBooks.size()>0) { return new
+		 * ResponseEntity<List<Book>>(findBooksByCourse, HttpStatus.OK); } return new
+		 * ResponseEntity<String>("No Books Found For Course", HttpStatus.NOT_FOUND);
+		 */
 	}
 
 	
