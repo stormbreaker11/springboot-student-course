@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.ToString;
 
@@ -24,6 +26,7 @@ public class Student implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
 	private long studentId;
 	private String studentName;
 	private String studentEmail;
@@ -36,9 +39,7 @@ public class Student implements Serializable {
 	 * 
 	 */
 	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "Student_course", joinColumns = {
-			@JoinColumn(name = "student_id", referencedColumnName = "studentId") }, inverseJoinColumns = {
-					@JoinColumn(name = "course_id", referencedColumnName = "courseid") })
+	@JoinColumn(name = "student_id", referencedColumnName = "studentId")
 	private Set<Courses> courses;
 
 }

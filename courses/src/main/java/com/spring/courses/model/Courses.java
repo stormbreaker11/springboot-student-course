@@ -12,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -24,6 +26,7 @@ public class Courses {
 	private String courseName;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Student student;
 	/*
 	 * @ManyToOne(cascade = CascadeType.ALL)
@@ -35,9 +38,7 @@ public class Courses {
 	 * Set<Book> book;
 	 */
 	@OneToMany(cascade = { CascadeType.ALL })
-	@JoinTable(name = "course_books", joinColumns = {
-			@JoinColumn(name = "course_id", referencedColumnName = "courseid") }, inverseJoinColumns = {
-					@JoinColumn(name = "book_id", referencedColumnName = "bookid") })
+	@JoinColumn(name = "course_id", referencedColumnName = "courseid")
 	private Set<Book> book;
 
 }
